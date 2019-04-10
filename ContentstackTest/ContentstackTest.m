@@ -256,26 +256,6 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 #pragma mark -
 #pragma mark Test Case - Markdown
 
--(void)testFetchContentTypeDescription {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"GET"];
-    ContentType *contentType = [csStack contentTypeWithName:@"product"];
-    [contentType fetch:^(NSDictionary * _Nullable schema, NSError * _Nullable error) {
-        XCTAssertTrue([schema isKindOfClass:[NSDictionary class]], @"array value should be NSDictionary");
-        XCTAssertTrue([schema[@"schema"] isKindOfClass:[NSArray class]], @"Value of key should be NSArray");
-        NSArray *objArray = (NSArray *)schema[@"schema"];
-        XCTAssertTrue([objArray[0] isKindOfClass:[NSDictionary class]], @"Object should be NSDictionary");
-        NSDictionary *arrObj = objArray[0];
-        NSArray *checkArry = @[@"data_type",@"uid",@"field_metadata"];
-        [checkArry enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL * _Nonnull stop) {
-            XCTAssertTrue([arrObj.allKeys containsObject:key],@"Data not Matched");
-        }];
-
-        [expectation fulfill];
-
-    }];
-    [self waitForRequest];
-}
-
 -(void)testFetchContentType {
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET"];
     ContentType *contentType = [csStack contentTypeWithName:@"product"];
@@ -1705,7 +1685,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Entries with Content type"];
     
-    ContentType* csForm = [csStack contentTypeWithName:nil];
+    ContentType* csForm = [csStack contentTypeWithName:@"product"];
     
     Query* csQuery = [csForm query];
     [csQuery includeContentType];
