@@ -24,7 +24,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     NSLog (@"set: %@",self.requestOperationSet);
     __block id headerDictionary = nil;
     [self.requestOperationSet enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
-        NSMutableURLRequest *request = [obj performSelector:NSSelectorFromString(@"request")];
+        NSMutableURLRequest *request = [obj performSelector:NSSelectorFromString(@"originalRequest")];
         NSLog (@"request: %@",request.allHTTPHeaderFields);
         *stop = YES;
         headerDictionary = request.allHTTPHeaderFields;
