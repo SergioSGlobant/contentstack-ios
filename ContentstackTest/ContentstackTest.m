@@ -24,7 +24,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     NSLog (@"set: %@",self.requestOperationSet);
     __block id headerDictionary = nil;
     [self.requestOperationSet enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
-        NSMutableURLRequest *request = [obj performSelector:NSSelectorFromString(@"request")];
+        NSMutableURLRequest *request = [obj performSelector:NSSelectorFromString(@"originalRequest")];
         NSLog (@"request: %@",request.allHTTPHeaderFields);
         *stop = YES;
         headerDictionary = request.allHTTPHeaderFields;
@@ -46,6 +46,9 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 @end
 
 @implementation ContentstackTest
+
+
+//Run TEST Case on terminal using set -o pipefail && env "NSUnbufferedIO=YES" xcodebuild "-workspace" "ContentStackSDK.xcworkspace" "-scheme" "Contentstack" "build" "test" "-destination" "id=841529D1-AEC3-4FF7-8AA4-079845D4FD4C" | xcpretty "--color" "--report" "html" "--output" "/Users/uttamukkoji/Documents/GitHub/contentstack-ios/ContentstackTest/TestResult/xcode-test-results-Contentstack.html"
 
 - (void)setUp {
     [super setUp];
@@ -252,6 +255,45 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 
 #pragma mark -
 #pragma mark Test Case - Markdown
+
+-(void)testFetchContentType {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"GET"];
+    ContentType *contentType = [csStack contentTypeWithName:@"product"];
+    [contentType fetch:^(NSDictionary * _Nullable contentType, NSError * _Nullable error) {
+        XCTAssertTrue([contentType isKindOfClass:[NSDictionary class]], @"array value should be NSDictionary");
+        XCTAssertTrue([contentType[@"schema"] isKindOfClass:[NSArray class]], @"Value of key should be NSArray");
+        NSArray *objArray = (NSArray *)contentType[@"schema"];
+        XCTAssertTrue([objArray[0] isKindOfClass:[NSDictionary class]], @"Object should be NSDictionary");
+        NSDictionary *arrObj = objArray[0];
+        NSArray *checkArry = @[@"data_type",@"uid",@"field_metadata"];
+        [checkArry enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL * _Nonnull stop) {
+            XCTAssertTrue([arrObj.allKeys containsObject:key],@"Data not Matched");
+        }];
+        [expectation fulfill];
+    }];
+    [self waitForRequest];
+}
+
+-(void)testGetContentTypes {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"GET"];
+    [csStack getContentTypes:^(NSArray * _Nullable contentTypes, NSError * _Nullable error) {
+        [contentTypes enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+               XCTAssertTrue([obj isKindOfClass:[NSDictionary class]], @"array value should be NSDictionary");
+               XCTAssertTrue([obj[@"schema"] isKindOfClass:[NSArray class]], @"Value of key should be NSArray");
+               NSArray *objArray = (NSArray *)obj[@"schema"];
+               XCTAssertTrue([objArray[0] isKindOfClass:[NSDictionary class]], @"Object should be NSDictionary");
+               NSDictionary *arrObj = objArray[0];
+               NSArray *checkArry = @[@"data_type",@"uid",@"field_metadata"];
+              [checkArry enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL * _Nonnull stop) {
+                  XCTAssertTrue([arrObj.allKeys containsObject:key],@"Data not Matched");
+              }];
+
+           }];
+        [expectation fulfill];
+    }];
+    [self waitForRequest];
+
+}
 
 - (void)testFetchMarkDownString {
     
