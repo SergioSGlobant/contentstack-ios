@@ -42,6 +42,9 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 }
 @property (nonatomic, strong) Entry *kvoEntry;
 @property (nonatomic, strong) NSString *productUid;
+@property (nonatomic, strong) NSString *assetUid;
+@property (nonatomic, strong) NSString *multiplefieldtUid;
+@property (nonatomic, strong) NSString *userUid;
 
 @end
 
@@ -54,9 +57,19 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     config = [[Config alloc] init];
-    config.host = @"cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
-    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
-    _productUid = @"blt04fe803db48a65a3";
+    config.host = @"api.blz-contentstack.com";
+    csStack = [Contentstack stackWithAPIKey:@"bltdd35c1a9e76490cc" accessToken:@"cs8bfa982bac402ba16e91d2b6" environmentName:@"env1" config:config];
+    _assetUid = @"blt304889595d537009";
+    _productUid = @"blt508e396ec8fff3ac";
+    _multiplefieldtUid = @"bltf17eccd3d47b4833";
+    _userUid = @"blt63f56ac7f48fc478";
+
+//    config.host = @"cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
+//    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
+//    _productUid = @"blt04fe803db48a65a3";
+//    _multiplefieldtUid = @"blt1b1cb4f26c4b682e";
+//    _assetUid = @"blt5312f71416d6e2c8";
+//    _userUid = @"blt3b0aaebf6f1c3762";
 }
 
 - (void)waitForRequest {
@@ -130,7 +143,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     XCTestExpectation *expectation = [self expectationWithDescription:@"KVO on Properties"];
     
     ContentType* csForm = [csStack contentTypeWithName:@"multifield"];
-    _kvoEntry = [csForm entryWithUID:@"blt1b1cb4f26c4b682e"];
+    _kvoEntry = [csForm entryWithUID:_multiplefieldtUid];
     [_kvoEntry.properties addObserver:self forKeyPath:@"description" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
     [_kvoEntry fetch:^(ResponseType type, NSError *error) {
@@ -150,7 +163,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"KVO on Properties"];
     ContentType* csForm = [csStack contentTypeWithName:@"multifield"];
-    _kvoEntry = [csForm entryWithUID:@"blt1b1cb4f26c4b682e"];
+    _kvoEntry = [csForm entryWithUID:_multiplefieldtUid];
     [_kvoEntry.properties addObserver:self forKeyPath:@"singlegroup.singlesubgruop.ssg_boolean" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
     [_kvoEntry fetch:^(ResponseType type, NSError *error) {
@@ -301,7 +314,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     
     ContentType* csForm = [csStack contentTypeWithName:@"user"];
     
-    Entry *entry = [csForm entryWithUID:@"blt3b0aaebf6f1c3762"];
+    Entry *entry = [csForm entryWithUID:_userUid];
     
     [entry fetch:^(ResponseType type, NSError *error) {
         if (error) {
@@ -336,7 +349,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Mark Down Array"];
     
     ContentType* csForm = [csStack contentTypeWithName:@"user"];
-    Entry *entry = [csForm entryWithUID:@"blt3b0aaebf6f1c3762"];
+    Entry *entry = [csForm entryWithUID:_userUid];
     
     [entry fetch:^(ResponseType type, NSError *error) {
         if (error) {
@@ -376,7 +389,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Asset"];
     
-    __block NSString *uid = @"blt5312f71416d6e2c8";
+    __block NSString *uid = _assetUid;
     Asset* assetObj = [csStack assetWithUID:uid];
     
     [assetObj fetch:^(ResponseType type, NSError * _Nonnull error) {
@@ -419,7 +432,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Asset"];
     
-    __block NSString *uid = @"blt5312f71416d6e2c8";
+    __block NSString *uid = _assetUid;
     Asset* assetObj = [csStack assetWithUID:uid];
     
     [assetObj fetch:^(ResponseType type, NSError * _Nonnull error) {
@@ -461,7 +474,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch group"];
     
     ContentType* csForm = [csStack contentTypeWithName:@"multifield"];
-    Entry *entry = [csForm entryWithUID:@"blt1b1cb4f26c4b682e"];
+    Entry *entry = [csForm entryWithUID:_multiplefieldtUid];
     
     [entry includeRefFieldWithKey:@[@"singlegroup.singleref"]];
     [entry fetch:^(ResponseType type, NSError * _Nonnull error) {
@@ -2037,7 +2050,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 //    // This is an example of a Image Transformation test case.
     XCTestExpectation *expectation = [self expectationWithDescription:@"Image Optimisation"];
 //
-    __block NSString *uid = @"blt5312f71416d6e2c8";
+    __block NSString *uid = _assetUid;
     Asset* assetObj = [csStack assetWithUID:uid];
 
     [assetObj fetch:^(ResponseType type, NSError * _Nonnull error) {
@@ -2067,7 +2080,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     //    // This is an example of a Image Transformation test case.
     XCTestExpectation *expectation = [self expectationWithDescription:@"addParam for Asset"];
     //
-    __block NSString *uid = @"bltfd8b297b131d5f1f";
+    __block NSString *uid = _assetUid;//blt206ae3246df5995a , ddd bltfd8b297b131d5f1f
     Asset* assetObj = [csStack assetWithUID:uid];
     [assetObj addParamKey:@"include_dimension" andValue:@"true"];
     [assetObj fetch:^(ResponseType type, NSError * _Nonnull error) {

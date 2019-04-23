@@ -6,13 +6,12 @@
 //  Copyright © 2018 Contentstack. All rights reserved.
 //
 
-#import "SyncTest.h"
 #import <Contentstack/Contentstack.h>
 #import <XCTest/XCTest.h>
 
 static NSInteger kRequestTimeOutInSeconds = 400;
 
-@interface SyncTest() {
+@interface SyncTest : XCTestCase {
     Stack *csStack;
     Config *config;
     CGFloat count;
@@ -25,13 +24,20 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 
 - (void)setUp {
     [super setUp];
+    // Blizaard Config
+    Config *_config = [[Config alloc] init];
+    _config.host = @"cdn.blz-contentstack.com";
+    syncToken = @"blt8d1e3075c44837c3057913";//Prod
+    csStack = [Contentstack stackWithAPIKey:@"blt59ea7afd1eb58d12" accessToken:@"cs20ec62a477546ef68ded62a8" environmentName:@"web" config:_config];
+    
+    
     // Put setup code here. This method is called before the invocation of each test method in the class.
     // Prod
-    Config *_config = [[Config alloc] init];
-    _config.host = @"cdn.contentstack.io";
-    syncToken = @"blt37f6aa8e41cbb327c6c6d3";//Prod
-    csStack = [Contentstack stackWithAPIKey:@"blt477ba55f9a67bcdf" accessToken:@"cs7731f03a2feef7713546fde5" environmentName:@"web" config:_config];
-    
+//    Config *_config = [[Config alloc] init];
+//    _config.host = @"cdn.contentstack.io";
+//    syncToken = @"blt37f6aa8e41cbb327c6c6d3";//Prod
+//    csStack = [Contentstack stackWithAPIKey:@"blt477ba55f9a67bcdf" accessToken:@"cs7731f03a2feef7713546fde5" environmentName:@"web" config:_config];
+//
     //Stag
 //    Config *_config = [[Config alloc] init];
 //    _config.host = @"stag-cdn.contentstack.io";
