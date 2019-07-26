@@ -53,6 +53,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Set Header"];
     Entry *entry = [[csStack contentTypeWithName:@"product"] entryWithUID:@"bltf6156698a6494737"];
     entry.language = MARATHI_INDIA;
+    [entry includeRefFieldWithKey:@[@"category"]];
 //    [entry addParamKey:@"locale" andValue:@"mr-in"];
     
     [entry fetch:^(ResponseType type, NSError * _Nullable error) {
