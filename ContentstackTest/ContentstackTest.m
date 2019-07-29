@@ -51,25 +51,25 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 @implementation ContentstackTest
 
 
-//Run TEST Case on terminal using set -o pipefail && env "NSUnbufferedIO=YES" xcodebuild "-workspace" "ContentStackSDK.xcworkspace" "-scheme" "Contentstack" "build" "test" "-destination" "id=841529D1-AEC3-4FF7-8AA4-079845D4FD4C" | xcpretty "--color" "--report" "html" "--output" "/Users/uttamukkoji/Documents/GitHub/contentstack-ios/ContentstackTest/TestResult/xcode-test-results-Contentstack.html"
+//Run TEST Case on terminal using set -o pipefail && env "NSUnbufferedIO=YES" xcodebuild "-workspace" "ContentStack.xcworkspace" "-scheme" "Contentstack" "build" "test" "-destination" "id=841529D1-AEC3-4FF7-8AA4-079845D4FD4C" | xcpretty "--color" "--report" "html" "--output" "/Users/uttamukkoji/Documents/GitHub/contentstack-ios/ContentstackTest/TestResult/xcode-test-results-Contentstack.html"
 
 - (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     config = [[Config alloc] init];
-    config.host = @"api.blz-contentstack.com";
-    csStack = [Contentstack stackWithAPIKey:@"bltdd35c1a9e76490cc" accessToken:@"cs8bfa982bac402ba16e91d2b6" environmentName:@"env1" config:config];
-    _assetUid = @"blt304889595d537009";
-    _productUid = @"blt508e396ec8fff3ac";
-    _multiplefieldtUid = @"bltf17eccd3d47b4833";
-    _userUid = @"blt63f56ac7f48fc478";
+//    config.host = @"api.blz-contentstack.com";
+//    csStack = [Contentstack stackWithAPIKey:@"bltdd35c1a9e76490cc" accessToken:@"cs8bfa982bac402ba16e91d2b6" environmentName:@"env1" config:config];
+//    _assetUid = @"blt304889595d537009";
+//    _productUid = @"blt508e396ec8fff3ac";
+//    _multiplefieldtUid = @"bltf17eccd3d47b4833";
+//    _userUid = @"blt63f56ac7f48fc478";
 
-//    config.host = @"cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
-//    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
-//    _productUid = @"blt04fe803db48a65a3";
-//    _multiplefieldtUid = @"blt1b1cb4f26c4b682e";
-//    _assetUid = @"blt5312f71416d6e2c8";
-//    _userUid = @"blt3b0aaebf6f1c3762";
+    config.host = @"stag-cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
+    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
+    _productUid = @"blt04fe803db48a65a3";
+    _multiplefieldtUid = @"blt1b1cb4f26c4b682e";
+    _assetUid = @"blt5312f71416d6e2c8";
+    _userUid = @"blt3b0aaebf6f1c3762";
 }
 
 - (void)waitForRequest {
@@ -197,7 +197,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 
 -(void)checkLanguageStatus:(Entry *)obj {
     
-    if (obj.language == ENGLISH_UNITED_STATES) {
+    if ([obj.locale isEqual: @"en-us"]) {
         XCTAssert(YES, @"Pass");
     } else {
         XCTFail(@"check Language");
@@ -209,62 +209,6 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     XCTAssertTrue(resultArray.count > 0, @"Product count should not be 0");
 }
 
-//#pragma mark -
-//#pragma mark Test Case - Last Activity
-//
-//- (void)testFetchLastActivity {
-//    XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Last Activity"];
-//
-//    [csStack fetchLastActivity:^(ResponseType responseType, NSDictionary * _Nonnull lastActivity, NSError * _Nonnull error) {
-//
-//        if (error) {
-//            XCTFail(@"~ ERR: %@", error.userInfo);
-//        }else {
-//            NSLog(@"lastActivityDictionary %@",lastActivity);
-//            XCTAssertNotNil(lastActivity, @"response should not be nil");
-//
-//            XCTAssertTrue([lastActivity isKindOfClass:[NSDictionary class]], @"Response should be NSDictionary");
-//            XCTAssertTrue([lastActivity[@"product"] isKindOfClass:[NSArray class]], @"Value of key should be NSArray");
-//            NSArray *objArray = (NSArray *)lastActivity[@"product"];
-//            XCTAssertTrue([objArray[0] isKindOfClass:[NSDictionary class]], @"Object should be NSDictionary");
-//            NSDictionary *obj = objArray[0];
-//            NSArray *checkArry = @[@"locale",@"time"];
-//            XCTAssertTrue([obj.allKeys isEqualToArray:checkArry],@"Data not Matched");
-//
-//        }
-//        [expectation fulfill];
-//
-//    }];
-//
-//    [self waitForRequest];
-//}
-//
-//- (void)testFetchSchema {
-//    XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Schema"];
-//
-//   [csStack fetchSchema:^(ResponseType responseType, NSArray * _Nullable schema, NSError * _Nullable error) {
-//
-//       if (error) {
-//           XCTFail(@"~ ERR: %@", error.userInfo);
-//       } else {
-//
-//           [schema enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//               XCTAssertTrue([obj isKindOfClass:[NSDictionary class]], @"array value should be NSDictionary");
-//               XCTAssertTrue([obj[@"schema"] isKindOfClass:[NSArray class]], @"Value of key should be NSArray");
-//               NSArray *objArray = (NSArray *)obj[@"schema"];
-//               XCTAssertTrue([objArray[0] isKindOfClass:[NSDictionary class]], @"Object should be NSDictionary");
-//               NSDictionary *arrObj = objArray[0];
-//               NSArray *checkArry = @[@"data_type",@"uid",@"field_metadata"];
-//              [checkArry enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL * _Nonnull stop) {
-//                  XCTAssertTrue([arrObj.allKeys containsObject:key],@"Data not Matched");
-//              }];
-//
-//           }];
-//       }
-//       [expectation fulfill];
-//   }];
-//    [self waitForRequest];
-//}
 
 #pragma mark -
 #pragma mark Test Case - Markdown
@@ -357,7 +301,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
         }else {
             [self checkLanguageStatus:entry];
             
-            NSLog(@"result %lu", (unsigned long)entry.language);
+            NSLog(@"result %@", entry.locale);
             
             NSArray *markdownArray = [entry HTMLArrayForMarkdownKey:@"markdown_multiple"];
             [markdownArray enumerateObjectsUsingBlock:^(NSString *markdownString, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -443,7 +387,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
             if ([assetObj.url length] > 0) {
                 
                 NSString *strImgURLAsString = assetObj.url;
-                [strImgURLAsString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                [strImgURLAsString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 NSURL *imgURL = [NSURL URLWithString:strImgURLAsString];
                 [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:imgURL] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                     if (!connectionError) {
@@ -551,6 +495,37 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     [self waitForRequest];
 }
 
+- (void)testFetchIncludeRefContentTypeUid {
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Single Entry with Reference  Content type"];
+    
+    ContentType* csForm = [csStack contentTypeWithName:@"product"];
+    
+    Entry *entry = [csForm entryWithUID:_productUid];
+    [entry includeReferenceContentTypeUid];
+    
+    [entry fetch:^(ResponseType type, NSError *error) {
+        if (error) {
+            XCTFail(@"~ ERR: %@, Message = %@", error.userInfo, error.description);
+        }else {
+            if ([[entry valueForKey:@"category"] isKindOfClass:[NSArray class]]) {
+                NSArray *catArray = [entry valueForKey:@"category"];
+                for (id category in catArray) {
+                    XCTAssertTrue([category isKindOfClass:[NSDictionary class]], "Category should be of type NSDictionary.");
+                    if ([category isKindOfClass:[NSDictionary class]]) {
+                        NSDictionary *catagoryDict = category;
+                        XCTAssertTrue([catagoryDict.allKeys containsObject:@"_content_type_uid"], "Category should have '_content_type_uid' key.");
+                    }
+                }
+            }
+            
+        }
+        [expectation fulfill];
+
+    }];
+    [self waitForRequest];
+
+}
 - (void)testFetchIncludeOnlyFields {
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Single Entry"];
@@ -1669,31 +1644,6 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 //    [self waitForRequest];
 //}
 
-- (void)testFetchWithSchema {
-    
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Entries with Schema"];
-    
-    ContentType* csForm = [csStack contentTypeWithName:@"product"];
-    
-    Query* csQuery = [csForm query];
-    [csQuery includeSchema];
-    [csQuery find:^(ResponseType type, QueryResult *result, NSError *error) {
-        
-        if (error) {
-            XCTFail(@"~ ERR: %@", error.userInfo);
-        } else {
-            [[result schema] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                XCTAssertTrue([result schema], "Schema should be present");
-            }];
-        }
-        
-        [expectation fulfill];
-        
-    }];
-    
-    [self waitForRequest];
-}
-
 - (void)testFetchWithContentType {
     
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Entries with Content type"];
@@ -1730,7 +1680,6 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     ContentType* csForm = [csStack contentTypeWithName:@"product"];
     
     Query* csQuery = [csForm query];
-    [csQuery includeSchema];
     [csQuery includeContentType];
     [csQuery find:^(ResponseType type, QueryResult *result, NSError *error) {
         
@@ -1755,6 +1704,36 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     [self waitForRequest];
 }
 
+- (void)testFetchWithIncludeReferenceContentTypeUID {
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Fetch Entries with Schema"];
+    
+    ContentType* csForm = [csStack contentTypeWithName:@"product"];
+    Query* csQuery = [csForm query];
+    [csQuery includeReferenceContentTypeUid];
+    [csQuery find:^(ResponseType type, QueryResult *result, NSError *error) {
+        if (error) {
+            XCTFail(@"~ ERR: %@", error.userInfo);
+        } else {
+            [[result getResult] enumerateObjectsUsingBlock:^(Entry *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([[obj valueForKey:@"category"] isKindOfClass:[NSArray class]]) {
+                    NSArray *catArray = [obj valueForKey:@"category"];
+                    for (id category in catArray) {
+                        XCTAssertTrue([category isKindOfClass:[NSDictionary class]], "Category should be of type NSDictionary.");
+                        if ([category isKindOfClass:[NSDictionary class]]) {
+                            NSDictionary *catagoryDict = category;
+                            XCTAssertTrue([catagoryDict.allKeys containsObject:@"_content_type_uid"], "Category should have '_content_type_uid' key.");
+                        }
+                    }
+                }
+            }];
+        }
+        [expectation fulfill];
+    }];
+    
+    [self waitForRequest];
+}
+
 
 - (void)testFetchWithContentTypeAndSchema {
     
@@ -1764,7 +1743,6 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     
     Query* csQuery = [csForm query];
     [csQuery includeContentType];
-    [csQuery includeSchema];
     [csQuery find:^(ResponseType type, QueryResult *result, NSError *error) {
         
         if (error) {
@@ -1845,7 +1823,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     ContentType* csForm = [csStack contentTypeWithName:@"product"];
     
     Query* csQuery = [csForm query];
-    [csQuery language:ENGLISH_UNITED_STATES];
+    [csQuery locale:@"en-us"];
     [csQuery whereKey:@"uid" equalTo:_productUid];
     
     
@@ -1860,7 +1838,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
                 
                 [self checkLanguageStatus:obj];
                 
-                if(obj.language != ENGLISH_UNITED_STATES){
+                if(obj.locale == @"en-us"){
                     XCTFail(@"Object does not have ENGLISH_UNITED_STATES language.");
                 }
             }];
@@ -1963,9 +1941,8 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     ContentType* csForm = [csStack contentTypeWithName:@"product"];
     
     Query* csQuery = [csForm query];
-    [csQuery includeSchema];
     
-    NSString *titleString = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took";
+    NSString *titleString = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
     
     [csQuery whereKey:@"title" notEqualTo:titleString];
     
