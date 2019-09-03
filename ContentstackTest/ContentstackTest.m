@@ -63,13 +63,20 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 //    _productUid = @"blt508e396ec8fff3ac";
 //    _multiplefieldtUid = @"bltf17eccd3d47b4833";
 //    _userUid = @"blt63f56ac7f48fc478";
+    config.region = EU;
+    config.host = @"cdn.contentstack.com";
+    csStack = [Contentstack stackWithAPIKey:@"bltc12b8d966127fa01" accessToken:@"cse3ab6095485b70ab2713ed60" environmentName:@"env1" config:config];
+    _productUid = @"blt52fc5505d7716e38";
+    _multiplefieldtUid = @"bltf97709a8e64a1967";
+    _assetUid = @"blt95c3244927cabe8c";
+    _userUid = @"blt529e29fcad64cb0a";
 
-    config.host = @"stag-cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
-    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
-    _productUid = @"blt04fe803db48a65a3";
-    _multiplefieldtUid = @"blt1b1cb4f26c4b682e";
-    _assetUid = @"blt5312f71416d6e2c8";
-    _userUid = @"blt3b0aaebf6f1c3762";
+//    config.host = @"cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
+//    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
+//    _productUid = @"blt04fe803db48a65a3";
+//    _multiplefieldtUid = @"blt1b1cb4f26c4b682e";
+//    _assetUid = @"blt5312f71416d6e2c8";
+//    _userUid = @"blt3b0aaebf6f1c3762";
 }
 
 - (void)waitForRequest {
@@ -623,6 +630,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
                 
                 [includeFields addObject:@"uid"];
                 [includeFields addObject:@"_metadata"];
+                [includeFields addObject:@"_content_type_uid"];
                 
                 [[entry objectForKey:@"category"] enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     
@@ -1342,6 +1350,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
                     
                     [fetchOnlyFieldsOfReferenceField addObject:@"uid"];
                     [fetchOnlyFieldsOfReferenceField addObject:@"_metadata"];
+                    [fetchOnlyFieldsOfReferenceField addObject:@"_content_type_uid"];
                     
                     [[entry objectForKey:@"category"] enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                         
@@ -1942,7 +1951,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     
     Query* csQuery = [csForm query];
     
-    NSString *titleString = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+    NSString *titleString = @"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. ********************** Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
     
     [csQuery whereKey:@"title" notEqualTo:titleString];
     
@@ -2019,6 +2028,70 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     [self waitForRequest];
 }
 
+- (void)testReferenceIn {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Test Add Query"];
+    
+    ContentType* csForm = [csStack contentTypeWithName:@"product"];
+    
+    Query* referenceQuery = [csForm query];
+    [referenceQuery whereKey:@"title" equalTo:@"Women"];
+    
+    
+    Query* csQuery = [csForm query];
+    [csQuery includeReferenceFieldWithKey:@[@"category"]];
+    [csQuery whereKey:@"category" in:referenceQuery];
+    
+    [csQuery find:^(ResponseType type, QueryResult *result, NSError *error) {
+        
+        if (error) {
+            XCTFail(@"~ ERR: %@", error.userInfo);
+        } else {
+            [self testProductCount:[result getResult]];
+            [[result getResult] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj isKindOfClass:[Entry class]]) {
+                    [self checkLanguageStatus:obj];
+                    
+                    XCTAssertTrue([[[obj objectForKey:@"category"] valueForKey:@"title"] containsObject:@"Women"],@"Title is not equal");
+                }
+            }];
+        }
+        [expectation fulfill];
+    }];
+    
+    [self waitForRequest];
+}
+
+
+- (void)testReferenceNotIn {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Test Add Query"];
+    
+    ContentType* csForm = [csStack contentTypeWithName:@"product"];
+    
+    Query* referenceQuery = [csForm query];
+    [referenceQuery whereKey:@"title" equalTo:@"Women"];
+    
+    Query* csQuery = [csForm query];
+    [csQuery includeReferenceFieldWithKey:@[@"category"]];
+    [csQuery whereKey:@"category" notIn:referenceQuery];
+    
+    [csQuery find:^(ResponseType type, QueryResult *result, NSError *error) {
+        
+        if (error) {
+            XCTFail(@"~ ERR: %@", error.userInfo);
+        } else {
+            [[result getResult] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj isKindOfClass:[Entry class]]) {
+                    if ([obj objectForKey:@"category"] != nil && [[obj objectForKey:@"category"] valueForKey:@"title"] != nil) {
+                        XCTAssertTrue(![[[obj objectForKey:@"category"] valueForKey:@"title"] containsObject:@"Women"],@"Title is equal");
+                    }
+                }
+            }];
+        }
+        [expectation fulfill];
+    }];
+    
+    [self waitForRequest];
+}
 
 #pragma mark -
 #pragma mark Test Case - Image Transformation
