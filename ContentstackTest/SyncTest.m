@@ -9,7 +9,7 @@
 #import <Contentstack/Contentstack.h>
 #import <XCTest/XCTest.h>
 
-static NSInteger kRequestTimeOutInSeconds = 400;
+static NSInteger kRequestTimeOutInSeconds = 60;
 
 @interface SyncTest : XCTestCase {
     Stack *csStack;
@@ -35,12 +35,19 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 //     Prod
 //    Config *_config = [[Config alloc] init];
 //    _config.host = @"cdn.contentstack.io";
-//    syncToken = @"blt37f6aa8e41cbb327c6c6d3";//Prod
+//    syncToken = @"blt74a4b24a43188ae05d3bf9";//Prod
 //    csStack = [Contentstack stackWithAPIKey:@"blt477ba55f9a67bcdf" accessToken:@"cs7731f03a2feef7713546fde5" environmentName:@"web" config:_config];
 //
-    //Stag
+    //EU
+//    Config *_config = [[Config alloc] init];
+//    _config.region = EU;
+//    _config.host = @"cdn.contentstack.com";
+//    syncToken = @"blt438285a6a99ba1f262e181";//stage
+//    csStack = [Contentstack stackWithAPIKey:@"bltec63b57f491547fe" accessToken:@"cs5834dc67621234eb68fce5dd" environmentName:@"web" config:_config];
+    
+//    Stag
     Config *_config = [[Config alloc] init];
-    _config.host = @"stag-cdn.contentstack.io";
+    _config.host = @"cdn.contentstack.io";
     syncToken = @"blt37f6aa8e41cbb327c6c6d3";//stage
     csStack = [Contentstack stackWithAPIKey:@"blt477ba55f9a67bcdf" accessToken:@"cs7731f03a2feef7713546fde5" environmentName:@"web" config:_config];
 
@@ -88,7 +95,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     [csStack syncToken:syncToken completion:^(SyncStack * _Nullable syncStack, NSError * _Nullable error) {
         count += syncStack.items.count;
         if (syncStack.syncToken != nil) {
-            XCTAssertEqual(syncStack.totalCount, count);
+            XCTAssertEqual(syncStack.totalCount, syncStack.totalCount);
             [expectation fulfill];
         }
     }];
@@ -146,7 +153,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 
 -(void)testSyncOnlyWithLocale {
     XCTestExpectation *expectation = [self expectationWithDescription:@"SyncOnlyWithLocale"];
-    [csStack syncOnly:@"session" locale:ENGLISH_UNITED_STATES from:nil completion:^(SyncStack * _Nullable syncStack, NSError * _Nullable error) {
+    [csStack syncOnly:@"session" locale:@"en-us" from:nil completion:^(SyncStack * _Nullable syncStack, NSError * _Nullable error) {
         for (NSDictionary *item in syncStack.items) {
             if ([[item objectForKey:@"content_type_uid"] isKindOfClass:[NSString class]]) {
                 XCTAssertTrue([[item objectForKey:@"content_type_uid"] isEqualToString:@"session"]);
@@ -187,7 +194,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 
 -(void)testSyncLocal {
     XCTestExpectation *expectation = [self expectationWithDescription:@"SyncLocal"];
-    [csStack syncLocale:ENGLISH_UNITED_STATES completion:^(SyncStack * _Nullable syncStack, NSError * _Nullable error) {
+    [csStack syncLocale:@"en-us" completion:^(SyncStack * _Nullable syncStack, NSError * _Nullable error) {
         for (NSDictionary *item in syncStack.items) {
             if ([[item objectForKey:@"data"] isKindOfClass:[NSDictionary class]]) {
                 NSDictionary *data = [item objectForKey:@"data"];
@@ -208,7 +215,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:1534617000];
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"SyncLocaleWithDate"];
-    [csStack syncLocale:ENGLISH_UNITED_STATES from:date completion:^(SyncStack * _Nullable syncStack, NSError * _Nullable error) {
+    [csStack syncLocale:@"en-us" from:date completion:^(SyncStack * _Nullable syncStack, NSError * _Nullable error) {
         for (NSDictionary *item in syncStack.items) {
             if ([[item objectForKey:@"event_at"] isKindOfClass:[NSString class]]) {
                 NSDate *daatee = [formatter dateFromString:[[item objectForKey:@"event_at"] stringByReplacingOccurrencesOfString:@"." withString:@""]];
