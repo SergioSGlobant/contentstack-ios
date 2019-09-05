@@ -38,9 +38,9 @@ static NSInteger kRequestTimeOutInSeconds = 60;
 //    syncToken = @"blt74a4b24a43188ae05d3bf9";//Prod
 //    csStack = [Contentstack stackWithAPIKey:@"blt477ba55f9a67bcdf" accessToken:@"cs7731f03a2feef7713546fde5" environmentName:@"web" config:_config];
 //
-    //Europe
+    //EU
 //    Config *_config = [[Config alloc] init];
-//    _config.region = Europe;
+//    _config.region = EU;
 //    _config.host = @"cdn.contentstack.com";
 //    syncToken = @"blt438285a6a99ba1f262e181";//stage
 //    csStack = [Contentstack stackWithAPIKey:@"bltec63b57f491547fe" accessToken:@"cs5834dc67621234eb68fce5dd" environmentName:@"web" config:_config];
