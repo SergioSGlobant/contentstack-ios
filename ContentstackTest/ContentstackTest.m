@@ -63,7 +63,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 //    _productUid = @"blt508e396ec8fff3ac";
 //    _multiplefieldtUid = @"bltf17eccd3d47b4833";
 //    _userUid = @"blt63f56ac7f48fc478";
-    config.region = Europe;
+    config.region = EUROPE;
     config.host = @"cdn.contentstack.com";
     csStack = [Contentstack stackWithAPIKey:@"bltc12b8d966127fa01" accessToken:@"cse3ab6095485b70ab2713ed60" environmentName:@"env1" config:config];
     _productUid = @"blt52fc5505d7716e38";
@@ -223,7 +223,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 -(void)testFetchContentType {
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET"];
     ContentType *contentType = [csStack contentTypeWithName:@"product"];
-    [contentType fetch:^(NSDictionary * _Nullable contentType, NSError * _Nullable error) {
+    [contentType fetch:nil completion:^(NSDictionary * _Nullable contentType, NSError * _Nullable error) {
         XCTAssertTrue([contentType isKindOfClass:[NSDictionary class]], @"array value should be NSDictionary");
         XCTAssertTrue([contentType[@"schema"] isKindOfClass:[NSArray class]], @"Value of key should be NSArray");
         NSArray *objArray = (NSArray *)contentType[@"schema"];
@@ -240,7 +240,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 
 -(void)testGetContentTypes {
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET"];
-    [csStack getContentTypes:^(NSArray * _Nullable contentTypes, NSError * _Nullable error) {
+    [csStack getContentTypes:nil completion:^(NSArray * _Nullable contentTypes, NSError * _Nullable error) {
         [contentTypes enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                XCTAssertTrue([obj isKindOfClass:[NSDictionary class]], @"array value should be NSDictionary");
                XCTAssertTrue([obj[@"schema"] isKindOfClass:[NSArray class]], @"Value of key should be NSArray");
