@@ -63,20 +63,20 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 //    _productUid = @"blt508e396ec8fff3ac";
 //    _multiplefieldtUid = @"bltf17eccd3d47b4833";
 //    _userUid = @"blt63f56ac7f48fc478";
-//    config.region = Europe;
-//    config.host = @"cdn.contentstack.com";
-//    csStack = [Contentstack stackWithAPIKey:@"bltc12b8d966127fa01" accessToken:@"cse3ab6095485b70ab2713ed60" environmentName:@"env1" config:config];
-//    _productUid = @"blt52fc5505d7716e38";
-//    _multiplefieldtUid = @"bltf97709a8e64a1967";
-//    _assetUid = @"blt95c3244927cabe8c";
-//    _userUid = @"blt529e29fcad64cb0a";
+    config.region = EU;
+    config.host = @"cdn.contentstack.com";
+    csStack = [Contentstack stackWithAPIKey:@"bltc12b8d966127fa01" accessToken:@"cse3ab6095485b70ab2713ed60" environmentName:@"env1" config:config];
+    _productUid = @"blt52fc5505d7716e38";
+    _multiplefieldtUid = @"bltf97709a8e64a1967";
+    _assetUid = @"blt95c3244927cabe8c";
+    _userUid = @"blt529e29fcad64cb0a";
 
-    config.host = @"cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
-    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
-    _productUid = @"blt04fe803db48a65a3";
-    _multiplefieldtUid = @"blt1b1cb4f26c4b682e";
-    _assetUid = @"blt5312f71416d6e2c8";
-    _userUid = @"blt3b0aaebf6f1c3762";
+//    config.host = @"cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
+//    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
+//    _productUid = @"blt04fe803db48a65a3";
+//    _multiplefieldtUid = @"blt1b1cb4f26c4b682e";
+//    _assetUid = @"blt5312f71416d6e2c8";
+//    _userUid = @"blt3b0aaebf6f1c3762";
 }
 
 - (void)waitForRequest {
