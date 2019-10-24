@@ -63,20 +63,22 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 //    _productUid = @"blt508e396ec8fff3ac";
 //    _multiplefieldtUid = @"bltf17eccd3d47b4833";
 //    _userUid = @"blt63f56ac7f48fc478";
-    config.region = EUROPE;
-    config.host = @"cdn.contentstack.com";
-    csStack = [Contentstack stackWithAPIKey:@"bltc12b8d966127fa01" accessToken:@"cse3ab6095485b70ab2713ed60" environmentName:@"env1" config:config];
-    _productUid = @"blt52fc5505d7716e38";
-    _multiplefieldtUid = @"bltf97709a8e64a1967";
-    _assetUid = @"blt95c3244927cabe8c";
-    _userUid = @"blt529e29fcad64cb0a";
+    
+    
+//    config.region = EUROPE;
+//    config.host = @"cdn.contentstack.com";
+//    csStack = [Contentstack stackWithAPIKey:@"bltc12b8d966127fa01" accessToken:@"cse3ab6095485b70ab2713ed60" environmentName:@"env1" config:config];
+//    _productUid = @"blt52fc5505d7716e38";
+//    _multiplefieldtUid = @"bltf97709a8e64a1967";
+//    _assetUid = @"blt95c3244927cabe8c";
+//    _userUid = @"blt529e29fcad64cb0a";
 
-//    config.host = @"cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
-//    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
-//    _productUid = @"blt04fe803db48a65a3";
-//    _multiplefieldtUid = @"blt1b1cb4f26c4b682e";
-//    _assetUid = @"blt5312f71416d6e2c8";
-//    _userUid = @"blt3b0aaebf6f1c3762";
+    config.host = @"cdn.contentstack.io";//@"cdn.contentstack.io";//@"stagcontentstack.global.ssl.fastly.net";//@"dev-cdn.contentstack.io";
+    csStack = [Contentstack stackWithAPIKey:@"blt12c8ad610ff4ddc2" accessToken:@"blt43359585f471685188b2e1ba" environmentName:@"env1" config:config];
+    _productUid = @"blt04fe803db48a65a3";
+    _multiplefieldtUid = @"blt1b1cb4f26c4b682e";
+    _assetUid = @"blt5312f71416d6e2c8";
+    _userUid = @"blt3b0aaebf6f1c3762";
 }
 
 - (void)waitForRequest {
@@ -238,6 +240,24 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     [self waitForRequest];
 }
 
+-(void)testFetchContentTypeIncludingSnippet {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"GET"];
+    ContentType *contentType = [csStack contentTypeWithName:@"product"];
+    [contentType fetch:@{@"include_snippet_schema": @"true"} completion:^(NSDictionary * _Nullable contentType, NSError * _Nullable error) {
+        XCTAssertTrue([contentType isKindOfClass:[NSDictionary class]], @"array value should be NSDictionary");
+        XCTAssertTrue([contentType[@"schema"] isKindOfClass:[NSArray class]], @"Value of key should be NSArray");
+        NSArray *objArray = (NSArray *)contentType[@"schema"];
+        XCTAssertTrue([objArray[0] isKindOfClass:[NSDictionary class]], @"Object should be NSDictionary");
+        NSDictionary *arrObj = objArray[0];
+        NSArray *checkArry = @[@"data_type",@"uid",@"field_metadata"];
+        [checkArry enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL * _Nonnull stop) {
+            XCTAssertTrue([arrObj.allKeys containsObject:key],@"Data not Matched");
+        }];
+        [expectation fulfill];
+    }];
+    [self waitForRequest];
+}
+
 -(void)testGetContentTypes {
     XCTestExpectation *expectation = [self expectationWithDescription:@"GET"];
     [csStack getContentTypes:nil completion:^(NSArray * _Nullable contentTypes, NSError * _Nullable error) {
@@ -257,6 +277,27 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     }];
     [self waitForRequest];
 
+}
+
+-(void)testGetContentTypesIncludeSnippet {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"GET"];
+    [csStack getContentTypes:@{@"include_snippet_schema": @"true"} completion:^(NSArray * _Nullable contentTypes, NSError * _Nullable error) {
+        [contentTypes enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            XCTAssertTrue([obj isKindOfClass:[NSDictionary class]], @"array value should be NSDictionary");
+            XCTAssertTrue([obj[@"schema"] isKindOfClass:[NSArray class]], @"Value of key should be NSArray");
+            NSArray *objArray = (NSArray *)obj[@"schema"];
+            XCTAssertTrue([objArray[0] isKindOfClass:[NSDictionary class]], @"Object should be NSDictionary");
+            NSDictionary *arrObj = objArray[0];
+            NSArray *checkArry = @[@"data_type",@"uid",@"field_metadata"];
+            [checkArry enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL * _Nonnull stop) {
+                XCTAssertTrue([arrObj.allKeys containsObject:key],@"Data not Matched");
+            }];
+            
+        }];
+        [expectation fulfill];
+    }];
+    [self waitForRequest];
+    
 }
 
 - (void)testFetchMarkDownString {
@@ -543,6 +584,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
     
     __block NSMutableArray *includeFields = [NSMutableArray array];
     [includeFields addObject:@"price"];
+    [includeFields addObject:@"title"];
     
     [entry includeOnlyFields:includeFields];
     
@@ -2205,12 +2247,12 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 #pragma mark -
 #pragma mark TestPerformanceExample
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
+//- (void)testPerformanceExample {
+//    // This is an example of a performance test case.
+//    [self measureBlock:^{
+//        // Put the code you want to measure the time of here.
+//    }];
+//}
 
 
 
