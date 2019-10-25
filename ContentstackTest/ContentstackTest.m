@@ -51,7 +51,7 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 @implementation ContentstackTest
 
 
-//Run TEST Case on terminal using set -o pipefail && env "NSUnbufferedIO=YES" xcodebuild "-workspace" "ContentStack.xcworkspace" "-scheme" "Contentstack" "build" "test" "-destination" "id=841529D1-AEC3-4FF7-8AA4-079845D4FD4C" | xcpretty "--color" "--report" "html" "--output" "/Users/uttamukkoji/Documents/GitHub/contentstack-ios/ContentstackTest/TestResult/xcode-test-results-Contentstack.html"
+//Run TEST Case on terminal using set -o pipefail && env "NSUnbufferedIO=YES" xcodebuild "-workspace" "ContentStack.xcworkspace" "-scheme" "Contentstack" "build" "test" "-destination" "id=5A6F1642-DAB2-4583-B19C-0068614B7420" | xcpretty "--color" "--report" "html" "--output" "/Users/uttamukkoji/Documents/GitHub/contentstack-ios/ContentstackTest/TestResult/xcode-test-results-Contentstack.html"
 
 - (void)setUp {
     [super setUp];
@@ -2207,9 +2207,9 @@ static NSInteger kRequestTimeOutInSeconds = 400;
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+//    [self measureBlock:^{
+//        // Put the code you want to measure the time of here.
+//    }];
 }
 
 
