@@ -47,7 +47,7 @@ static NSInteger kRequestTimeOutInSeconds = 60;
     
 //    Stag
     Config *_config = [[Config alloc] init];
-    _config.host = @"cdn.contentstack.io";
+    _config.host = @"stag-cdn.contentstack.io";
     syncToken = @"blt37f6aa8e41cbb327c6c6d3";//stage
     csStack = [Contentstack stackWithAPIKey:@"blt477ba55f9a67bcdf" accessToken:@"cs7731f03a2feef7713546fde5" environmentName:@"web" config:_config];
 
