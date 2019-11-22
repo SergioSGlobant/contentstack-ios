@@ -261,13 +261,20 @@
 }
 
 - (NSData *)jsonDataFromDictonary:(NSDictionary *)dict {
-    NSData *JSONData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:NULL];
-    return JSONData;
+    if (dict != nil) {
+        NSData *JSONData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:NULL];
+        return JSONData;
+    }
+    return [NSData new];
+    
 }
 
 - (NSString *)jsonStringFromDictonary:(NSDictionary *)dict {
-    NSData *JSONData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:NULL];
-    return [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
+    if (dict != nil) {
+        NSData *JSONData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:NULL];
+        return [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
+    }
+    return @"";
 }
 
 - (NSArray *)arrayFromJSONData:(NSData *)data {
@@ -276,8 +283,11 @@
 }
 
 - (NSString *)jsonStringFromArray:(NSArray*)array {
-    NSData *JSONData = [NSJSONSerialization dataWithJSONObject:array options:0 error:NULL];
-    return [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
+    if (array != nil) {
+        NSData *JSONData = [NSJSONSerialization dataWithJSONObject:array options:0 error:NULL];
+        return [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
+    }
+    return @"";
 }
 
 
