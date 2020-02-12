@@ -227,9 +227,13 @@ NSArray * CSIOQueryStringPairsFromKeyAndValue(NSString *key, id value) {
 
 - (void)saveToCacheDataTask:(NSURLSessionDataTask *)task responseObject:(nonnull id) responseObject{
     NSError *error;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:(NSJSONWritingPrettyPrinted) error:&error];
-    NSCachedURLResponse *cacheResponse = [[NSCachedURLResponse alloc] initWithResponse:task.response data:data];
-    [[NSURLCache sharedURLCache] storeCachedResponse:cacheResponse forRequest:task.originalRequest];
+    if (responseObject != nil)
+    {
+        NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:(NSJSONWritingPrettyPrinted) error:&error];
+        NSCachedURLResponse *cacheResponse = [[NSCachedURLResponse alloc] initWithResponse:task.response data:data];
+        [[NSURLCache sharedURLCache] storeCachedResponse:cacheResponse forRequest:task.originalRequest];
+    }
+    
 }
 
 - (id)cachedJSONResponseForRequest:(NSURLRequest *)request {
